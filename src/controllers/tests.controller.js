@@ -1,4 +1,5 @@
 import {Test} from "../models/test.model.js";
+import {Result} from "../models/result.model.js";
 import mongoose from "mongoose";
 
 // Create Test
@@ -21,12 +22,24 @@ const createTest = async (req, res) => {
 // Get All Tests
 const getAllTests = async (req, res) => {
   try {
-    const tests = await Test.find();
-    res
-    .status(200)
-    .json(tests);
+    const userId = req.user.id;
+
+    // Fetch all tests
+    const allTests = await Test.find();
+
+    // Fetch all results for the logged-in user
+    const userResults = await Result.find({ user: userId }).select('test');
+
+    // Extract the test IDs that the user has already taken
+    const takenTestIds = userResults.map(result => result.test.toString());
+
+    // Filter out the tests that the user has already taken
+    const tests = allTests.filter(test => !takenTestIds.includes(test._id.toString()));
+
+    res.status(200).json(tests);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Error fetching tests:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
