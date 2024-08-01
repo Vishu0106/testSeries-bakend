@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 // Create Test
 const createTest = async (req, res) => {
   const { testName, numberOfQuestions, marksPerQuestion, questions } = req.body;
-  console.log("req.body",req.body);
   if(!testName || !numberOfQuestions || !marksPerQuestion || !questions){
     return res
     .status(400)

@@ -33,8 +33,6 @@ const registerUser = async (req, res) => {
 // Login User
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log("eamil ,mail ",email,password);
-  console.log("req.body",req.body);
   if(!email || !password){
     return res
     .status(400)

@@ -71,7 +71,6 @@ const getResults = async (req, res) => {
         
         let testId = req.query.id;
         testId = new mongoose.Types.ObjectId(testId);
-        console.log("testId",testId);
         const results = await Result.findOne({test:testId,user:userId});
         console.log("results",results);
         res.status(200).json({
