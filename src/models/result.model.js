@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const resultSchema = new mongoose.Schema({
   user: { 
@@ -15,12 +15,27 @@ const resultSchema = new mongoose.Schema({
     type: Number, 
     required: true 
 },
+  totalScore: { 
+    type: Number, 
+    required: true
+},
+   accuracy: { 
+    type: Number, 
+    required: true
+},
   answers: [
     { 
-        questionId: mongoose.Schema.Types.ObjectId, 
-        selectedOption: String 
-    }
-]
+        question: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Question' 
+        },
+        selectedAnswer: { 
+            type: String 
+        },
+        isCorrect: { 
+            type: Boolean 
+        }
+    }],
 },{timestamps:true});
 
-module.exports = mongoose.model('Result', resultSchema);
+export const Result = mongoose.model('Result', resultSchema);
