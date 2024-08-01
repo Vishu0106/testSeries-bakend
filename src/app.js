@@ -1,10 +1,12 @@
-process.loadEnvFile();
+
 import express, { urlencoded } from 'express';
 import cors from 'cors'
 import userRoutes from './routes/user.routes.js';
 import resultRoutes from './routes/result.routes.js';
 import testRoutes from './routes/test.routes.js'; 
 import { protect } from './middlewares/authentication.medileware.js';
+import {config} from "dotenv"
+config()
 
 const app = express()
 
